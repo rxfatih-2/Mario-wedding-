@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Wedding Bros. — Undangan Pernikahan Raka &amp; Nadya</title>
+
+    <!-- Google Fonts: Press Start 2P & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --sky-blue: #5C94FC;
+            --sky-deep: #3B76E8;
+            --brick-brown: #C84C0C;
+            --brick-dark: #882800;
+            --coin-gold: #FAC000;
+            --coin-shadow: #B87000;
+            --pipe-green: #00A800;
+            --pipe-light: #7CE810;
+            --pipe-dark: #005800;
+            --mario-red: #E52521;
+            --peach-pink: #FF77A8;
+            --pixel-dark: #181818;
+            --cream-bg: #FFF9EB;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--sky-blue);
+            color: var(--pixel-dark);
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .font-pixel {
+            font-family: 'Press Start 2P', cursive;
+            line-height: 1.5;
+        }
+
+        /* Arcade Borders & Depth */
+        .arcade-box {
+            border: 4px solid var(--pixel-dark);
+            box-shadow: 6px 6px 0px var(--pixel-dark);
+            border-radius: 14px;
+        }
+
+        .arcade-box-sm {
+            border: 3px solid var(--pixel-dark);
+            box-shadow: 4px 4px 0px var(--pixel-dark);
+            border-radius: 10px;
+        }
+
+        .arcade-btn {
+            border: 4px solid var(--pixel-dark);
+            box-shadow: 0 6px 0 var(--pixel-dark);
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            border-radius: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .arcade-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 var(--pixel-dark);
+        }
+
+        /* Ground Tiles & Brick Patterns */
+        .ground-tiles {
+            height: 46px;
+            background-color: #E09050;
+            background-image:
+                repeating-linear-gradient(90deg, var(--pixel-dark) 0px, var(--pixel-dark) 3px, transparent 3px, transparent 46px),
+                repeating-linear-gradient(0deg, var(--pixel-dark) 0px, var(--pixel-dark) 3px, transparent 3px, transparent 23px);
+            border-top: 4px solid var(--pixel-dark);
+            border-bottom: 4px solid var(--pixel-dark);
+            position: relative;
+        }
+        .ground-tiles::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 12px;
+            background: linear-gradient(180deg, #7CE810 0%, #00A800 100%);
+            border-bottom: 4px solid var(--pixel-dark);
+        }
+
+        .brick-divider {
+            height: 36px;
+            background-color: var(--brick-brown);
+            background-image:
+                repeating-linear-gradient(90deg, var(--pixel-dark) 0px, var(--pixel-dark) 3px, transparent 3px, transparent 44px),
+                repeating-linear-gradient(0deg, var(--pixel-dark) 0px, var(--pixel-dark) 3px, transparent 3px, transparent 18px);
+            border-top: 4px solid var(--pixel-dark);
+            border-bottom: 4px solid var(--pixel-dark);
+        }
+
+        /* Warp Pipe CSS */
+        .warp-pipe-top {
+            background: linear-gradient(90deg, var(--pipe-dark) 0%, var(--pipe-green) 22%, var(--pipe-light) 38%, var(--pipe-green) 72%, var(--pipe-dark) 100%);
+            border: 4px solid var(--pixel-dark);
+            border-radius: 8px;
+            height: 32px;
+            width: 112%;
+            margin-left: -6%;
+            position: relative;
+            z-index: 3;
+        }
+        .warp-pipe-body {
+            background: linear-gradient(90deg, var(--pipe-dark) 0%, var(--pipe-green) 22%, var(--pipe-light) 38%, var(--pipe-green) 72%, var(--pipe-dark) 100%);
+            border-left: 4px solid var(--pixel-dark);
+            border-right: 4px solid var(--pixel-dark);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Mystery Question Block */
+        .mystery-block {
+            background: linear-gradient(145deg, #FFE44D 0%, #FAC000 60%, #E09800 100%);
+            border: 4px solid var(--pixel-dark);
+            box-shadow: inset -4px -4px 0px var(--coin-shadow), inset 4px 4px 0px #FFF599, 4px 4px 0px var(--pixel-dark);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            animation: gentleFloatBlock 1.8s ease-in-out infinite;
+        }
+        .mystery-block.hit {
+            background: #9E856C;
+            box-shadow: inset -4px -4px 0px #685040, inset 4px 4px 0px #C8B098, 4px 4px 0px var(--pixel-dark);
+            animation: none;
+        }
+        .mystery-block.bump {
+            animation: blockBump 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* =====================================================================
+           ADVANCED MARIO WORLD KEYFRAME ANIMATIONS
+           ===================================================================== */
+        @keyframes gentleFloatBlock {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes blockBump {
+            0% { transform: translateY(0); }
+            45% { transform: translateY(-22px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Parallax Clouds */
+        @keyframes cloudDrift {
+            0% { transform: translateX(-180px); }
+            100% { transform: translateX(105vw); }
+        }
+        .cloud-slow { animation: cloudDrift 42s linear infinite; }
+        .cloud-mid { animation: cloudDrift 30s linear infinite; animation-delay: -12s; }
+        .cloud-fast { animation: cloudDrift 24s linear infinite; animation-delay: -19s; }
+
+        /* Spinning 3D-style Gold Coin */
+        @keyframes spinCoin {
+            0%, 100% { transform: scaleX(1) translateY(0); }
+            25% { transform: scaleX(0.2) translateY(-4px); }
+            50% { transform: scaleX(1) translateY(-7px); }
+            75% { transform: scaleX(0.2) translateY(-3px); }
+        }
+        .animate-spin-coin {
+            animation: spinCoin 1.1s ease-in-out infinite;
+        }
+
+        /* Gate Mario & Peach Idle Bounce */
+        @keyframes gateMarioJump {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            35% { transform: translateY(-28px) rotate(-4deg); }
+            60% { transform: translateY(0) rotate(0deg); }
+            80% { transform: translateY(-10px); }
+        }
+        .animate-gate-mario {
+            animation: gateMarioJump 2s ease-in-out infinite;
+        }
+
+        @keyframes gatePeachWave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-gate-peach {
+            animation: gatePeachWave 2.2s ease-in-out infinite;
+            animation-delay: 0.4s;
+        }
+
+        /* =====================================================================
+           HERO LIVE STAGE CHOREOGRAPHY (MARIO RUNNING, JUMPING PIPE, HITTING ? BLOCK)
+           ===================================================================== */
+        /* 8-second continuous loop across the stage */
+        @keyframes heroMarioChoreography {
+            0% {
+                left: 3%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            16% {
+                left: 24%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            24% {
+                left: 32%;
+                bottom: 84px; /* Jump over Green Pipe */
+                transform: scaleX(1) rotate(-6deg);
+            }
+            33% {
+                left: 41%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            44% {
+                left: 50%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            50% {
+                left: 52%;
+                bottom: 66px; /* Headbutt Mystery ? Block! */
+                transform: scaleX(1) rotate(-4deg);
+            }
+            57% {
+                left: 55%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            68% {
+                left: 69%;
+                bottom: 0px; /* Meet Princess Peach */
+                transform: scaleX(1) rotate(0deg);
+            }
+            74% {
+                left: 69%;
+                bottom: 22px; /* Happy jump with Peach */
+                transform: scaleX(1) rotate(0deg);
+            }
+            80% {
+                left: 69%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            86% {
+                left: 69%;
+                bottom: 18px; /* Second happy jump */
+                transform: scaleX(1) rotate(0deg);
+            }
+            92% {
+                left: 69%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            100% {
+                left: 3%;
+                bottom: 0px;
+                transform: scaleX(1) rotate(0deg);
+            }
+        }
+        .stage-mario-actor {
+            animation: heroMarioChoreography 8.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        /* Synced Mystery Block Bump at 50% of 8.5s loop */
+        @keyframes syncedStageBlock {
+            0%, 48%, 56%, 100% { transform: translateY(0); }
+            51% { transform: translateY(-20px); }
+        }
+        .stage-synced-block {
+            animation: syncedStageBlock 8.5s ease-out infinite;
+        }
+
+        /* Synced Coin & 1-UP Mushroom Pop at 51% of 8.5s loop */
+        @keyframes syncedRewardPop {
+            0%, 49% { transform: translateY(0) scale(0.5); opacity: 0; }
+            51% { transform: translateY(-10px) scale(1); opacity: 1; }
+            62% { transform: translateY(-68px) scale(1.25); opacity: 1; }
+            72%, 100% { transform: translateY(-85px) scale(1); opacity: 0; }
+        }
+        .stage-synced-reward {
+            animation: syncedRewardPop 8.5s ease-out infinite;
+        }
+
+        /* Synced Hearts Burst when Mario meets Peach (68% - 92%) */
+        @keyframes syncedLoveHearts {
+            0%, 66%, 94%, 100% { transform: translateY(0) scale(0.4); opacity: 0; }
+            72% { transform: translateY(-18px) scale(1.1); opacity: 1; }
+            85% { transform: translateY(-48px) scale(1.25); opacity: 1; }
+        }
+        .stage-love-hearts {
+            animation: syncedLoveHearts 8.5s ease-out infinite;
+        }
+
+        /* Piranha Plant Peek */
+        @keyframes piranhaPeek {
+            0%, 22% { transform: translateY(44px); }
+            38%, 68% { transform: translateY(0px); }
+            85%, 100% { transform: translateY(44px); }
+        }
+        .animate-piranha {
+            animation: piranhaPeek 4.5s ease-in-out infinite;
+        }
+
+        /* Goomba Patrol */
+        @keyframes goombaPatrol {
+            0%, 100% { transform: translateX(0) scaleX(1); }
+            48% { transform: translateX(48px) scaleX(1); }
+            50% { transform: translateX(48px) scaleX(-1); }
+            98% { transform: translateX(0) scaleX(-1); }
+        }
+        .animate-goomba {
+            animation: goombaPatrol 4s linear infinite;
+        }
+
+        /* Floating Pop Item on User Click */
+        @keyframes itemPop {
+            0% { transform: translateY(0) scale(0.7); opacity: 1; }
+            55% { transform: translateY(-65px) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-95px) scale(1); opacity: 0; }
+        }
+        .animate-item-pop {
+            animation: itemPop 0.85s ease-out forwards;
+        }
+
+        /* Blinking Arcade Prompt */
+        @keyframes blinkArcade {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0.25; }
+        }
+        .blink-prompt {
+            animation: blinkArcade 1.1s infinite;
+        }
+
+        /* Gate Opening Curtain Transition */
+        .gate-overlay {
+            transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.7s ease;
+        }
+        .gate-overlay.opened {
+            transform: translateY(-105%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Castle Finale Transitions */
+        .castle-flag {
+            transition: top 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .mario-finale-runner {
+            transition: left 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        @keyframes fireworkBurst {
+            0% { transform: scale(0.2); opacity: 1; }
+            70% { transform: scale(1.35); opacity: 1; }
+            100% { transform: scale(1.65); opacity: 0; }
+        }
+        .animate-firework {
+            animation: fireworkBurst 0.95s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#FAC000] selection:text-[#181818]">
+
+    <!-- =====================================================================
+         REUSABLE HD VECTOR DEFS (MARIO HD, PRINCESS PEACH HD, GOOMBA, MUSHROOM)
+         ===================================================================== -->
+    <svg class="hidden" aria-hidden="true">
+        <defs>
+            <!-- HD MARIO VECTOR ARTWORK -->
+            <g id="hd-mario">
+                <!-- Drop Shadow -->
+                <ellipse cx="60" cy="114" rx="34" ry="6" fill="rgba(0,0,0,0.28)"/>
+                <!-- Back Arm & White Glove -->
+                <path d="M26 68 C16 66, 12 76, 18 84 L32 82 Z" fill="#E52521" stroke="#181818" stroke-width="3.5"/>
+                <circle cx="18" cy="82" r="9" fill="#FFFFFF" stroke="#181818" stroke-width="3.5"/>
+                <!-- Shoes -->
+                <path d="M32 104 C24 104, 20 113, 30 114 L54 114 C56 108, 52 104, 44 104 Z" fill="#7A3B0E" stroke="#181818" stroke-width="3.5"/>
+                <path d="M64 104 C62 108, 64 114, 72 114 L92 114 C100 113, 96 104, 86 104 Z" fill="#7A3B0E" stroke="#181818" stroke-width="3.5"/>
+                <!-- Red Shirt Torso -->
+                <path d="M34 62 L86 62 L90 88 L30 88 Z" fill="#E52521" stroke="#181818" stroke-width="3.5"/>
+                <!-- Blue Denim Overalls -->
+                <path d="M36 62 L46 62 L46 74 L74 74 L74 62 L84 62 L86 105 L66 105 L64 92 L56 92 L54 105 L34 105 Z" fill="#1D5CE8" stroke="#181818" stroke-width="3.5" stroke-linejoin="round"/>
+                <!-- Gold Overall Buttons -->
+                <circle cx="44" cy="79" r="4.5" fill="#FAC000" stroke="#181818" stroke-width="2.5"/>
+                <circle cx="76" cy="79" r="4.5" fill="#FAC000" stroke="#181818" stroke-width="2.5"/>
+                <!-- Front Arm & White Glove -->
+                <path d="M84 64 C96 60, 106 68, 102 78 L86 80 Z" fill="#E52521" stroke="#181818" stroke-width="3.5"/>
+                <circle cx="101" cy="76" r="9.5" fill="#FFFFFF" stroke="#181818" stroke-width="3.5"/>
+                <!-- Head & Ears -->
+                <circle cx="33" cy="44" r="7.5" fill="#FFBE86" stroke="#181818" stroke-width="3.5"/>
+                <path d="M35 30 C35 18, 86 18, 86 38 C86 55, 76 64, 58 64 C42 64, 35 55, 35 30 Z" fill="#FFCAA0" stroke="#181818" stroke-width="3.5"/>
+                <!-- Brown Hair & Sideburns -->
+                <path d="M34 32 C31 38, 32 48, 39 50 L42 40 L38 32 Z" fill="#633008" stroke="#181818" stroke-width="3"/>
+                <!-- Expressive Eyes -->
+                <ellipse cx="64" cy="37" rx="4.5" ry="7" fill="#FFFFFF" stroke="#181818" stroke-width="2.5"/>
+                <ellipse cx="65" cy="37" rx="2.5" ry="4.5" fill="#1E78FF"/>
+                <circle cx="65.5" cy="36.5" r="1.5" fill="#181818"/>
+                <circle cx="64.5" cy="34.5" r="1" fill="#FFFFFF"/>
+                <!-- Eyebrow -->
+                <path d="M58 28 Q64 25 70 28" fill="none" stroke="#4A2204" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Big Round Nose -->
+                <ellipse cx="79" cy="43" rx="10" ry="7.5" fill="#FFB375" stroke="#181818" stroke-width="3.5"/>
+                <!-- Iconic Scalloped Mustache -->
+                <path d="M56 50 C60 56, 66 56, 70 52 C74 56, 80 56, 85 51 C88 48, 84 46, 70 47 C58 46, 54 48, 56 50 Z" fill="#4A2204" stroke="#181818" stroke-width="3"/>
+                <!-- Happy Smile -->
+                <path d="M62 55 Q70 61 77 55" fill="#E52521" stroke="#181818" stroke-width="2.5"/>
+                <!-- Iconic Red Cap with White Emblem & M -->
+                <path d="M31 28 C32 10, 84 8, 88 26 L98 28 C100 32, 86 34, 62 32 C42 30, 31 31, 31 28 Z" fill="#E52521" stroke="#181818" stroke-width="3.5" stroke-linejoin="round"/>
+                <ellipse cx="65" cy="19" rx="10" ry="7.5" fill="#FFFFFF" stroke="#181818" stroke-width="2.5"/>
+                <path d="M60 22 L60 16 L65 20 L70 16 L70 22" fill="none" stroke="#E52521" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+
+            <!-- HD PRINCESS PEACH VECTOR ARTWORK -->
+            <g id="hd-peach">
+                <!-- Drop Shadow -->
+                <ellipse cx="60" cy="115" rx="36" ry="6" fill="rgba(0,0,0,0.28)"/>
+                <!-- Long Flowing Golden Blonde Hair (Back) -->
+                <path d="M34 32 C22 48, 22 76, 32 90 C38 82, 42 74, 44 64 L76 64 C78 74, 82 82, 88 90 C98 76, 98 48, 86 32 Z" fill="#FFD93D" stroke="#181818" stroke-width="3.5" stroke-linejoin="round"/>
+                <!-- Royal Layered Pink Gown -->
+                <path d="M44 60 L76 60 L92 108 C72 114, 48 114, 28 108 Z" fill="#FF77A8" stroke="#181818" stroke-width="3.5" stroke-linejoin="round"/>
+                <!-- Gown Panniers (Side Puffs) & Hem Ruffles -->
+                <path d="M36 68 C26 74, 26 88, 38 92 C44 86, 46 76, 44 68 Z" fill="#FF9EC2" stroke="#181818" stroke-width="3"/>
+                <path d="M84 68 C94 74, 94 88, 82 92 C76 86, 74 76, 76 68 Z" fill="#FF9EC2" stroke="#181818" stroke-width="3"/>
+                <path d="M28 104 Q44 112 60 105 Q76 112 92 104 L93 111 Q76 117 60 111 Q44 117 27 111 Z" fill="#FF4D8D" stroke="#181818" stroke-width="3"/>
+                <!-- Bodice & Sapphire Brooch -->
+                <path d="M45 58 L75 58 L72 72 L48 72 Z" fill="#FF9EC2" stroke="#181818" stroke-width="3"/>
+                <ellipse cx="60" cy="63" rx="5" ry="6" fill="#00A8FF" stroke="#FAC000" stroke-width="2.5"/>
+                <!-- Puff Sleeves & Long White Opera Gloves -->
+                <circle cx="40" cy="61" r="8" fill="#FF9EC2" stroke="#181818" stroke-width="3"/>
+                <path d="M35 66 L24 82 L30 86 L41 70 Z" fill="#FFFFFF" stroke="#181818" stroke-width="3"/>
+                <circle cx="80" cy="61" r="8" fill="#FF9EC2" stroke="#181818" stroke-width="3"/>
+                <!-- Waving Right Arm -->
+                <path d="M84 58 L98 44 L103 49 L88 64 Z" fill="#FFFFFF" stroke="#181818" stroke-width="3"/>
+                <!-- Head & Face -->
+                <path d="M41 34 C41 20, 79 20, 79 34 C79 50, 70 57, 60 57 C50 57, 41 50, 41 34 Z" fill="#FFD6B5" stroke="#181818" stroke-width="3.5"/>
+                <!-- Blue Gem Earrings -->
+                <circle cx="40" cy="44" r="4" fill="#00A8FF" stroke="#181818" stroke-width="2"/>
+                <circle cx="80" cy="44" r="4" fill="#00A8FF" stroke="#181818" stroke-width="2"/>
+                <!-- Blonde Bangs -->
+                <path d="M40 34 C40 18, 80 18, 80 34 C75 26, 68 26, 60 32 C52 26, 45 26, 40 34 Z" fill="#FFE659" stroke="#181818" stroke-width="3"/>
+                <!-- Expressive Blue Eyes & Lashes -->
+                <ellipse cx="52" cy="39" rx="3.8" ry="5.5" fill="#FFFFFF" stroke="#181818" stroke-width="2"/>
+                <circle cx="52.5" cy="39.5" r="2.6" fill="#0088FF"/>
+                <circle cx="51.8" cy="38" r="1" fill="#FFFFFF"/>
+                <ellipse cx="68" cy="39" rx="3.8" ry="5.5" fill="#FFFFFF" stroke="#181818" stroke-width="2"/>
+                <circle cx="67.5" cy="39.5" r="2.6" fill="#0088FF"/>
+                <circle cx="66.8" cy="38" r="1" fill="#FFFFFF"/>
+                <!-- Rosy Cheeks & Sweet Smile -->
+                <ellipse cx="47" cy="45" rx="3" ry="1.8" fill="#FF85A2" opacity="0.75"/>
+                <ellipse cx="73" cy="45" rx="3" ry="1.8" fill="#FF85A2" opacity="0.75"/>
+                <path d="M56 48 Q60 52 64 48" fill="none" stroke="#E52521" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Golden Royal Crown with Jewels -->
+                <path d="M47 21 L45 9 L53 15 L60 6 L67 15 L75 9 L73 21 Z" fill="#FAC000" stroke="#181818" stroke-width="3" stroke-linejoin="round"/>
+                <circle cx="60" cy="14" r="2.5" fill="#E52521"/>
+                <circle cx="51" cy="16" r="1.8" fill="#00A8FF"/>
+                <circle cx="69" cy="16" r="1.8" fill="#00A8FF"/>
+            </g>
+
+            <!-- HD GOOMBA ENEMY VECTOR -->
+            <g id="hd-goomba">
+                <path d="M12 28 C12 10, 48 10, 48 28 C48 35, 42 38, 30 38 C18 38, 12 35, 12 28 Z" fill="#C85A17" stroke="#181818" stroke-width="3"/>
+                <path d="M20 36 L40 36 L42 46 L18 46 Z" fill="#FFE0B2" stroke="#181818" stroke-width="3"/>
+                <ellipse cx="22" cy="48" rx="7" ry="4" fill="#3E2723" stroke="#181818" stroke-width="2.5"/>
+                <ellipse cx="38" cy="48" rx="7" ry="4" fill="#3E2723" stroke="#181818" stroke-width="2.5"/>
+                <!-- Cute Angry Eyebrows & Eyes -->
+                <ellipse cx="24" cy="27" rx="3.5" ry="5" fill="#FFFFFF" stroke="#181818" stroke-width="2"/>
+                <circle cx="24.5" cy="27" r="2" fill="#181818"/>
+                <ellipse cx="36" cy="27" rx="3.5" ry="5" fill="#FFFFFF" stroke="#181818" stroke-width="2"/>
+                <circle cx="35.5" cy="27" r="2" fill="#181818"/>
+                <path d="M19 21 L27 24 M41 21 L33 24" stroke="#181818" stroke-width="3" stroke-linecap="round"/>
+            </g>
+
+            <!-- HD 1-UP / SUPER MUSHROOM -->
+            <g id="hd-mushroom">
+                <path d="M8 26 C8 10, 44 10, 44 26 C44 31, 8 31, 8 26 Z" fill="#00C800" stroke="#181818" stroke-width="3"/>
+                <circle cx="26" cy="18" r="6" fill="#FFFFFF"/>
+                <circle cx="13" cy="22" r="4" fill="#FFFFFF"/>
+                <circle cx="39" cy="22" r="4" fill="#FFFFFF"/>
+                <path d="M16 28 L36 28 L35 40 C35 43, 17 43, 17 40 Z" fill="#FFE0B2" stroke="#181818" stroke-width="3"/>
+                <ellipse cx="22" cy="34" rx="1.8" ry="3" fill="#181818"/>
+                <ellipse cx="30" cy="34" rx="1.8" ry="3" fill="#181818"/>
+            </g>
+        </defs>
+    </svg>
+
+    <!-- =====================================================================
+         1. GERBANG AWAL (FULLSCREEN OPENING COVER GATE / TITLE SCREEN)
+         ===================================================================== -->
+    <div id="opening-gate" class="gate-overlay fixed inset-0 z-[100] bg-gradient-to-b from-[#3B76E8] via-[#5C94FC] to-[#87B5FF] flex flex-col justify-between overflow-hidden">
+        <!-- Animated Gate Clouds -->
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+            <svg class="cloud-slow absolute top-10 w-36 sm:w-44 opacity-95" viewBox="0 0 120 60">
+                <path d="M25 48 H95 A18 18 0 0 0 95 14 A22 22 0 0 0 55 10 A20 20 0 0 0 25 22 A15 15 0 0 0 25 48 Z" fill="#FFFFFF" stroke="#181818" stroke-width="4"/>
+                <ellipse cx="52" cy="30" rx="2.5" ry="5" fill="#181818"/>
+                <ellipse cx="68" cy="30" rx="2.5" ry="5" fill="#181818"/>
+            </svg>
+            <svg class="cloud-mid absolute top-28 w-28 sm:w-36 opacity-90" viewBox="0 0 120 60">
+                <path d="M25 48 H95 A18 18 0 0 0 95 14 A22 22 0 0 0 55 10 A20 20 0 0 0 25 22 A15 15 0 0 0 25 48 Z" fill="#FFFFFF" stroke="#181818" stroke-width="4"/>
+            </svg>
+        </div>
+
+        <!-- Top Arcade Bar on Gate -->
+        <div class="relative z-10 max-w-4xl mx-auto w-full px-4 pt-4 flex justify-between items-center text-white font-pixel text-[9px] sm:text-xs drop-shadow-[2px_2px_0px_#181818]">
+            <span>1P: RAKA</span>
+            <span class="text-[#FAC000]">★ WORLD 1-1 ★</span>
+            <span>2P: NADYA</span>
+        </div>
+
+        <!-- Center Title Cartridge & Guest Name Card -->
+        <div class="relative z-10 max-w-xl mx-auto w-full px-4 text-center my-auto">
+            <div class="bg-[#C84C0C] arcade-box px-5 sm:px-8 py-5 sm:py-6 mb-5 transform -rotate-1">
+                <div class="flex justify-between text-[#FAC000] font-pixel text-[9px] sm:text-[11px] mb-2">
+                    <span>★</span>
+                    <span>THE WEDDING ADVENTURE</span>
+                    <span>★</span>
+                </div>
+                <h1 class="font-pixel text-lg sm:text-2xl md:text-3xl text-white drop-shadow-[4px_4px_0px_#181818] leading-snug">
+                    SUPER WEDDING BROS.
+                </h1>
+                <div class="mt-3 inline-block bg-[#181818] text-[#FAC000] font-pixel text-xs sm:text-sm px-4 py-1.5 rounded-lg border-2 border-[#FAC000]">
+                    RAKA &amp; NADYA
+                </div>
+            </div>
+
+            <!-- Kepada Yth. Tamu Undangan Box -->
+            <div class="bg-[#FFF9EB] arcade-box-sm p-4 sm:p-5 max-w-md mx-auto mb-6">
+                <p class="font-pixel text-[9px] sm:text-[10px] text-[#E52521] mb-1.5">
+                    KEPADA YTH. BAPAK/IBU/SAUDARA/I:
+                </p>
+                <div id="guest-invite-name" class="text-lg sm:text-xl font-extrabold text-[#181818] tracking-tight">
+                    Tamu Spesial
+                </div>
+                <p class="text-xs text-gray-600 mt-1 font-semibold">
+                    Tanpa mengurangi rasa hormat, kami mengundang Anda hadir di hari bahagia kami.
+                </p>
+            </div>
+
+            <!-- Start Invitation Button -->
+            <button onclick="openWeddingGate()" class="arcade-btn bg-[#FAC000] hover:bg-[#ffe042] text-[#181818] font-pixel text-xs sm:text-sm px-6 sm:px-9 py-4 sm:py-5 inline-flex items-center gap-3">
+                <span class="text-[#E52521] text-base">▶</span>
+                <span class="blink-prompt">BUKA UNDANGAN</span>
+            </button>
+        </div>
+
+        <!-- Bottom Gate Scenery: Hills, Mario HD Jumping, Princess Peach HD Waving & Castle -->
+        <div class="relative z-10 w-full">
+            <div class="max-w-4xl mx-auto px-4 flex items-end justify-between -mb-1 relative">
+                <!-- Left Green Hill -->
+                <div class="w-28 sm:w-44 h-16 sm:h-24 bg-[#00A800] border-4 border-[#181818] border-b-0 rounded-t-full flex items-center justify-center">
+                    <div class="flex gap-2.5">
+                        <span class="w-2 h-3.5 bg-[#181818] rounded-full"></span>
+                        <span class="w-2 h-3.5 bg-[#181818] rounded-full"></span>
+                    </div>
+                </div>
+
+                <!-- Mario HD Jumping Toward Peach -->
+                <div class="animate-gate-mario -mb-1 z-20">
+                    <svg class="w-20 h-20 sm:w-28 sm:h-28" viewBox="0 0 120 120">
+                        <use href="#hd-mario"/>
+                    </svg>
+                </div>
+
+                <!-- Floating Heart -->
+                <div class="self-center mb-6 text-2xl sm:text-3xl animate-bounce">❤️</div>
+
+                <!-- Princess Peach HD Waving -->
+                <div class="animate-gate-peach -mb-1 z-20">
+                    <svg class="w-20 h-20 sm:w-28 sm:h-28" viewBox="0 0 120 120">
+                        <use href="#hd-peach"/>
+                    </svg>
+                </div>
+
+                <!-- Right Mini Castle -->
+                <div class="hidden sm:flex w-28 h-28 bg-[#C84C0C] border-4 border-[#181818] border-b-0 flex-col justify-between items-center">
+                    <div class="w-full flex justify-between -mt-3 px-1">
+                        <span class="w-5 h-3 bg-[#C84C0C] border-2 border-[#181818]"></span>
+                        <span class="w-5 h-3 bg-[#C84C0C] border-2 border-[#181818]"></span>
+                        <span class="w-5 h-3 bg-[#C84C0C] border-2 border-[#181818]"></span>
+                    </div>
+                    <div class="w-10 h-12 bg-[#181818] rounded-t-full"></div>
+                </div>
+            </div>
+            <div class="ground-tiles w-full"></div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         TOP FIXED ARCADE HUD BAR
+         ===================================================================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#181818]/95 backdrop-blur text-white border-b-4 border-[#FAC000] px-3 py-2.5 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between gap-2 text-[9px] sm:text-xs font-pixel">
+            <!-- Player Names & Score -->
+            <div class="flex items-center gap-3">
+                <div>
+                    <div class="text-[#E52521]">RAKA &amp; NADYA</div>
+                    <div class="text-white mt-0.5" id="hud-score">002026</div>
+                </div>
+            </div>
+
+            <!-- Interactive Coin Counter -->
+            <button onclick="collectBonusCoin(this)" title="Klik untuk ambil koin!" class="flex items-center gap-2 bg-[#282828] hover:bg-[#383838] px-3 py-1.5 rounded-lg border-2 border-[#FAC000] transition cursor-pointer">
+                <span class="inline-block w-3 h-4 bg-[#FAC000] rounded-full border-2 border-white animate-spin-coin"></span>
+                <span class="text-[#FAC000]">x<span id="coin-count">00</span></span>
+            </button>
+
+            <!-- World Indicator -->
+            <div class="hidden md:block text-center">
+                <div class="text-gray-400 text-[9px]">STAGE</div>
+                <div class="text-white mt-0.5">WORLD 1-1</div>
+            </div>
+
+            <!-- Music BGM & SFX Controls -->
+            <div class="flex items-center gap-2">
+                <button id="bgm-toggle" onclick="toggleBGM()" class="bg-[#282828] text-[#FAC000] px-2.5 py-1.5 rounded-lg border-2 border-[#FAC000] text-[8px] sm:text-[10px] flex items-center gap-1.5 cursor-pointer">
+                    <span>🎵</span>
+                    <span id="bgm-label">BGM: OFF</span>
+                </button>
+                <button id="sound-toggle" onclick="toggleAudio()" class="bg-[#E52521] text-white px-2.5 py-1.5 rounded-lg border-2 border-white text-[8px] sm:text-[10px] cursor-pointer" title="Suara Efek">
+                    <span id="sound-icon">🔊</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         2. TAMPILAN ATAS (HERO STAGE) DENGAN ANIMASI MARIO HD BERGERAK & DUNIA HIDUP
+         ===================================================================== -->
+    <section class="relative pt-20 sm:pt-24 pb-0 overflow-hidden bg-gradient-to-b from-[#4584F7] via-[#5C94FC] to-[#7BAEFF]">
+        <!-- Parallax Smiling Clouds -->
+        <div class="pointer-events-none absolute inset-0 overflow-hidden z-0">
+            <svg class="cloud-slow absolute top-16 w-32 sm:w-44 opacity-95" viewBox="0 0 120 60">
+                <path d="M25 48 H95 A18 18 0 0 0 95 14 A22 22 0 0 0 55 10 A20 20 0 0 0 25 22 A15 15 0 0 0 25 48 Z" fill="#FFFFFF" stroke="#181818" stroke-width="4"/>
+                <ellipse cx="52" cy="30" rx="2.5" ry="5" fill="#181818"/>
+                <ellipse cx="68" cy="30" rx="2.5" ry="5" fill="#181818"/>
+            </svg>
+            <svg class="cloud-fast absolute top-36 w-24 sm:w-32 opacity-90" viewBox="0 0 120 60">
+                <path d="M25 48 H95 A18 18 0 0 0 95 14 A22 22 0 0 0 55 10 A20 20 0 0 0 25 22 A15 15 0 0 0 25 48 Z" fill="#FFFFFF" stroke="#181818" stroke-width="4"/>
+            </svg>
+        </div>
+
+        <!-- LIVE INTERACTIVE ANIMATED MARIO STAGE BANNER AT THE TOP -->
+        <div class="relative z-10 max-w-5xl mx-auto px-3 sm:px-4 mb-6">
+            <div class="bg-[#5C94FC]/70 border-4 border-[#181818] rounded-2xl overflow-hidden shadow-[6px_6px_0px_#181818] relative">
+                <!-- Stage Mini Header -->
+                <div class="bg-[#181818] text-white px-3 py-1.5 flex justify-between items-center font-pixel text-[8px] sm:text-[10px]">
+                    <span class="text-[#FAC000]">★ LIVE STAGE 1-1: MARIO &amp; PEACH ADVENTURE</span>
+                    <span class="text-[#7CE810]">CO-OP ACTIVE</span>
+                </div>
+
+                <!-- Live Action Stage Arena (Height 210px - 240px) -->
+                <div class="relative h-52 sm:h-60 w-full overflow-hidden">
+                    <!-- Background Parallax Hills -->
+                    <div class="absolute bottom-0 left-4 w-36 sm:w-48 h-20 sm:h-24 bg-[#00A800] border-4 border-[#181818] border-b-0 rounded-t-full opacity-95"></div>
+                    <div class="absolute bottom-0 right-12 w-44 sm:w-60 h-28 sm:h-32 bg-[#008800] border-4 border-[#181818] border-b-0 rounded-t-full opacity-90"></div>
+
+                    <!-- Floating Brick & Question Block Row (Center-Right) -->
+                    <div class="absolute top-12 sm:top-14 left-[44%] sm:left-[47%] flex items-center z-20">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 bg-[#C84C0C] border-3 border-[#181818] rounded-l-md flex items-center justify-center shadow-[2px_2px_0px_#181818]">
+                            <div class="w-5 h-5 border border-[#882800]"></div>
+                        </div>
+                        <!-- Synced Question Block that Mario Headbutts! -->
+                        <button onclick="collectBonusCoin(this, '🍄 1-UP!')" class="stage-synced-block w-10 h-10 sm:w-12 sm:h-12 bg-[#FAC000] border-3 border-[#181818] font-pixel text-sm sm:text-base text-[#181818] flex items-center justify-center shadow-[2px_2px_0px_#181818] relative cursor-pointer">
+                            ?
+                            <!-- Synced Popping 1-UP Mushroom & Coin -->
+                            <div class="stage-synced-reward pointer-events-none absolute -top-4 flex flex-col items-center">
+                                <span class="font-pixel text-[9px] text-[#7CE810] drop-shadow-[2px_2px_0px_#181818] whitespace-nowrap">1-UP!</span>
+                                <svg class="w-7 h-7" viewBox="0 0 52 52">
+                                    <use href="#hd-mushroom"/>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 bg-[#C84C0C] border-3 border-[#181818] rounded-r-md flex items-center justify-center shadow-[2px_2px_0px_#181818]">
+                            <div class="w-5 h-5 border border-[#882800]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Goomba Patrolling on the Left -->
+                    <div onclick="collectBonusCoin(this, '⭐ +200')" title="Klik Goomba!" class="animate-goomba absolute bottom-0 left-[8%] z-20 cursor-pointer">
+                        <svg class="w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 60 56">
+                            <use href="#hd-goomba"/>
+                        </svg>
+                    </div>
+
+                    <!-- Green Warp Pipe with Piranha Plant (Obstacle Mario Jumps Over!) -->
+                    <div class="absolute bottom-0 left-[29%] sm:left-[30%] w-12 sm:w-14 flex flex-col items-center z-20">
+                        <div class="animate-piranha -mb-2 z-0">
+                            <svg class="w-9 h-10 sm:w-10 sm:h-12" viewBox="0 0 40 48">
+                                <path d="M6 20 C6 4, 34 4, 34 20 C34 26, 6 26, 6 20 Z" fill="#E52521" stroke="#181818" stroke-width="3"/>
+                                <circle cx="14" cy="12" r="3" fill="#FFFFFF"/>
+                                <circle cx="26" cy="12" r="3" fill="#FFFFFF"/>
+                                <circle cx="20" cy="18" r="2.5" fill="#FFFFFF"/>
+                                <path d="M10 18 L30 18" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="4 3"/>
+                                <rect x="18" y="24" width="4" height="22" fill="#00A800" stroke="#181818" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="warp-pipe-top !h-6"></div>
+                        <div class="warp-pipe-body w-10 sm:w-12 h-11 sm:h-14"></div>
+                    </div>
+
+                    <!-- CHOREOGRAPHED RUNNING & JUMPING MARIO HD -->
+                    <div onclick="playJumpSound(); collectBonusCoin(this);" title="Klik Mario!" class="stage-mario-actor absolute z-30 cursor-pointer">
+                        <svg class="w-16 h-16 sm:w-20 sm:h-20" viewBox="0 0 120 120">
+                            <use href="#hd-mario"/>
+                        </svg>
+                    </div>
+
+                    <!-- PRINCESS PEACH HD WAITING ON RIGHT SIDE WITH SYNCED HEARTS -->
+                    <div onclick="play1UpSound(); collectBonusCoin(this, '❤️ LOVE!');" title="Klik Princess Peach!" class="animate-gate-peach absolute bottom-0 right-[8%] sm:right-[11%] z-30 cursor-pointer flex flex-col items-center">
+                        <!-- Synced Floating Hearts when Mario arrives -->
+                        <div class="stage-love-hearts pointer-events-none -mb-2 flex gap-1 text-base sm:text-xl">
+                            <span>💖</span><span>💕</span>
+                        </div>
+                        <svg class="w-16 h-16 sm:w-20 sm:h-20" viewBox="0 0 120 120">
+                            <use href="#hd-peach"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="ground-tiles !h-8 w-full"></div>
+            </div>
+        </div>
+
+        <!-- MAIN HERO TITLE & FOTO BERSAMA #1 -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center pb-10">
+            <div class="inline-block bg-[#181818] text-[#FAC000] font-pixel text-[9px] sm:text-xs px-4 py-2 rounded-full border-2 border-[#FAC000] mb-3">
+                THE ROYAL WEDDING OF
+            </div>
+            <h2 class="font-pixel text-2xl sm:text-4xl md:text-5xl text-white drop-shadow-[4px_4px_0px_#181818] mb-6">
+                RAKA &amp; NADYA
+            </h2>
+
+            <!-- =================================================================
+                 FOTO BERSAMA 1 (HERO / SAVE THE DATE)
+                 Ganti nilai atribut src="..." di bawah ini dengan foto berdua #1
+                 ================================================================= -->
+            <div class="max-w-md mx-auto bg-[#FAC000] arcade-box p-3 sm:p-4 mb-7">
+                <div class="bg-[#181818] text-[#FAC000] font-pixel text-[9px] sm:text-[10px] py-2 px-3 rounded-t-lg flex justify-between items-center">
+                    <span>STAGE 00: SAVE THE DATE</span>
+                    <span>♥ 2P CO-OP</span>
+                </div>
+                <div class="relative overflow-hidden border-4 border-[#181818] bg-gray-200 aspect-[4/3]">
+                    <!-- FOTO BERSAMA 1 -->
+                    <img
+                        src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80"
+                        onerror="this.src='https://placehold.co/800x600/FAC000/181818?text=Foto+Bersama+1'"
+                        alt="Foto Bersama Pengantin 1 - Raka dan Nadya"
+                        class="w-full h-full object-cover"
+                    >
+                    <button onclick="collectBonusCoin(this)" class="absolute top-3 left-3 bg-[#181818]/90 text-[#FAC000] font-pixel text-[9px] px-2.5 py-1.5 rounded-lg border-2 border-[#FAC000] flex items-center gap-1.5 cursor-pointer">
+                        <span class="inline-block w-2.5 h-3.5 bg-[#FAC000] rounded-full animate-spin-coin"></span>
+                        <span>+100</span>
+                    </button>
+                    <div class="absolute bottom-3 right-3 bg-[#E52521] text-white font-pixel text-[9px] sm:text-[10px] px-3 py-1.5 rounded border-2 border-[#181818]">
+                        20 . 12 . 2026
+                    </div>
+                </div>
+                <div class="bg-[#FFF9EB] border-x-4 border-b-4 border-[#181818] p-3.5 text-center rounded-b-lg">
+                    <p class="text-sm sm:text-base font-extrabold text-[#181818]">
+                        "Dua pemain, satu petualangan seumur hidup!"
+                    </p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-700 mt-1">
+                        Minggu, 20 Desember 2026 • Grand Ballroom Nusantara, Jakarta
+                    </p>
+                </div>
+            </div>
+
+            <!-- Countdown Timer HUD -->
+            <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-md mx-auto mb-7">
+                <div class="bg-[#181818] text-white arcade-box-sm py-3 px-1">
+                    <div id="cd-days" class="font-pixel text-sm sm:text-lg text-[#FAC000]">00</div>
+                    <div class="text-[10px] sm:text-xs font-bold mt-1 text-gray-300">HARI</div>
+                </div>
+                <div class="bg-[#181818] text-white arcade-box-sm py-3 px-1">
+                    <div id="cd-hours" class="font-pixel text-sm sm:text-lg text-[#FAC000]">00</div>
+                    <div class="text-[10px] sm:text-xs font-bold mt-1 text-gray-300">JAM</div>
+                </div>
+                <div class="bg-[#181818] text-white arcade-box-sm py-3 px-1">
+                    <div id="cd-mins" class="font-pixel text-sm sm:text-lg text-[#FAC000]">00</div>
+                    <div class="text-[10px] sm:text-xs font-bold mt-1 text-gray-300">MENIT</div>
+                </div>
+                <div class="bg-[#181818] text-white arcade-box-sm py-3 px-1">
+                    <div id="cd-secs" class="font-pixel text-sm sm:text-lg text-[#E52521]">00</div>
+                    <div class="text-[10px] sm:text-xs font-bold mt-1 text-gray-300">DETIK</div>
+                </div>
+            </div>
+
+            <a href="#players" onclick="playJumpSound(); collectBonusCoin(this);" class="inline-block arcade-btn bg-[#FAC000] hover:bg-[#ffe042] text-[#181818] font-pixel text-xs sm:text-sm px-7 py-4">
+                ▼ MULAI PETUALANGAN
+            </a>
+        </div>
+
+        <div class="ground-tiles w-full"></div>
+    </section>
+
+    <!-- =====================================================================
+         3. CHARACTER SELECT: 2 FOTO PENGANTIN SENDIRI-SENDIRI + MARIO & PEACH HD
+         ===================================================================== -->
+    <section id="players" class="py-16 px-4 bg-[#3B76E8] border-b-4 border-[#181818]">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-[#181818] text-[#FAC000] font-pixel text-[10px] sm:text-xs px-4 py-2 rounded-lg mb-3">
+                    WORLD 1-1: CHARACTER SELECT
+                </span>
+                <h2 class="font-pixel text-lg sm:text-2xl md:text-3xl text-white drop-shadow-[3px_3px_0px_#181818]">
+                    MEMPELAI BERBAHAGIA
+                </h2>
+                <p class="text-white text-sm sm:text-base max-w-xl mx-auto mt-3 font-semibold drop-shadow-[1px_1px_0px_#181818]">
+                    Dengan memohon rahmat dan ridho Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan pernikahan putra-putri kami:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- =============================================================
+                     PLAYER 1: MEMPELAI PRIA (FOTO PENGANTIN PRIA SENDIRI)
+                     Ganti nilai atribut src="..." di bawah ini dengan foto pria #1
+                     ============================================================= -->
+                <div class="bg-[#FFF9EB] arcade-box p-5 sm:p-6 relative">
+                    <div class="flex items-center justify-between bg-[#E52521] text-white px-3.5 py-2 rounded-xl border-3 border-[#181818] mb-5">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-9 h-9" viewBox="0 0 120 120">
+                                <use href="#hd-mario"/>
+                            </svg>
+                            <span class="font-pixel text-[10px] sm:text-xs">PLAYER 1</span>
+                        </div>
+                        <span class="font-pixel text-[9px] sm:text-[10px] bg-[#181818] text-[#FAC000] px-2.5 py-1 rounded">GROOM</span>
+                    </div>
+
+                    <!-- FOTO PENGANTIN PRIA -->
+                    <div class="relative mx-auto w-52 h-52 sm:w-60 sm:h-60 mb-5 rounded-2xl overflow-hidden border-4 border-[#181818] shadow-[5px_5px_0px_#181818] bg-gray-200">
+                        <img
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
+                            onerror="this.src='https://placehold.co/500x500/E52521/FFFFFF?text=Foto+Pengantin+Pria'"
+                            alt="Foto Pengantin Pria - Raka Pratama"
+                            class="w-full h-full object-cover"
+                        >
+                    </div>
+
+                    <div class="text-center">
+                        <h3 class="font-pixel text-sm sm:text-base text-[#E52521] mb-1.5">Raka Pratama, S.Kom</h3>
+                        <p class="text-xs sm:text-sm font-semibold text-gray-700 mb-4">
+                            Putra pertama dari Bapak Hendra Wijaya &amp; Ibu Sari Melati
+                        </p>
+
+                        <!-- Player 1 Stats -->
+                        <div class="bg-white border-3 border-[#181818] rounded-xl p-3.5 text-left text-xs space-y-2.5">
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>❤️ LOVE &amp; LOYALTY</span>
+                                    <span class="text-[#E52521]">100%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-gray-200 border-2 border-[#181818] rounded overflow-hidden">
+                                    <div class="h-full bg-[#E52521] w-full"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>☕ COFFEE &amp; ADVENTURE</span>
+                                    <span class="text-[#00A800]">95%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-gray-200 border-2 border-[#181818] rounded overflow-hidden">
+                                    <div class="h-full bg-[#00A800] w-[95%]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="https://instagram.com" target="_blank" rel="noopener" class="inline-block mt-4 text-xs font-bold bg-[#181818] text-white px-4 py-2 rounded-lg hover:bg-[#E52521] transition">
+                            @rakapratama
+                        </a>
+                    </div>
+                </div>
+
+                <!-- =============================================================
+                     PLAYER 2: MEMPELAI WANITA (FOTO PENGANTIN WANITA SENDIRI)
+                     Ganti nilai atribut src="..." di bawah ini dengan foto wanita #2
+                     ============================================================= -->
+                <div class="bg-[#FFF9EB] arcade-box p-5 sm:p-6 relative">
+                    <div class="flex items-center justify-between bg-[#FF77A8] text-[#181818] px-3.5 py-2 rounded-xl border-3 border-[#181818] mb-5">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-9 h-9" viewBox="0 0 120 120">
+                                <use href="#hd-peach"/>
+                            </svg>
+                            <span class="font-pixel text-[10px] sm:text-xs">PLAYER 2</span>
+                        </div>
+                        <span class="font-pixel text-[9px] sm:text-[10px] bg-[#181818] text-[#FAC000] px-2.5 py-1 rounded">BRIDE</span>
+                    </div>
+
+                    <!-- FOTO PENGANTIN WANITA -->
+                    <div class="relative mx-auto w-52 h-52 sm:w-60 sm:h-60 mb-5 rounded-2xl overflow-hidden border-4 border-[#181818] shadow-[5px_5px_0px_#181818] bg-gray-200">
+                        <img
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80"
+                            onerror="this.src='https://placehold.co/500x500/FF77A8/181818?text=Foto+Pengantin+Wanita'"
+                            alt="Foto Pengantin Wanita - Nadya Maharani"
+                            class="w-full h-full object-cover"
+                        >
+                    </div>
+
+                    <div class="text-center">
+                        <h3 class="font-pixel text-sm sm:text-base text-[#D6336C] mb-1.5">Nadya Maharani, S.Ds</h3>
+                        <p class="text-xs sm:text-sm font-semibold text-gray-700 mb-4">
+                            Putri kedua dari Bapak Bambang Santoso &amp; Ibu Ratna Dewi
+                        </p>
+
+                        <!-- Player 2 Stats -->
+                        <div class="bg-white border-3 border-[#181818] rounded-xl p-3.5 text-left text-xs space-y-2.5">
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>❤️ LOVE &amp; KINDNESS</span>
+                                    <span class="text-[#E52521]">100%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-gray-200 border-2 border-[#181818] rounded overflow-hidden">
+                                    <div class="h-full bg-[#E52521] w-full"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>🍰 BAKING &amp; CREATIVITY</span>
+                                    <span class="text-[#00A800]">98%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-gray-200 border-2 border-[#181818] rounded overflow-hidden">
+                                    <div class="h-full bg-[#00A800] w-[98%]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="https://instagram.com" target="_blank" rel="noopener" class="inline-block mt-4 text-xs font-bold bg-[#181818] text-white px-4 py-2 rounded-lg hover:bg-[#FF77A8] hover:text-[#181818] transition">
+                            @nadyamaharani
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         4. WORLD 1-2: CO-OP ADVENTURE (FOTO BERSAMA #2 + TIMELINE + MYSTERY ?)
+         ===================================================================== -->
+    <section id="story" class="py-16 px-4 bg-[#5C94FC] relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-[#FAC000] text-[#181818] border-3 border-[#181818] font-pixel text-[10px] sm:text-xs px-4 py-2 rounded-lg mb-3">
+                    WORLD 1-2: OUR CO-OP STORY
+                </span>
+                <h2 class="font-pixel text-lg sm:text-2xl md:text-3xl text-white drop-shadow-[3px_3px_0px_#181818]">
+                    PETUALANGAN CINTA KAMI
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+                <!-- =============================================================
+                     FOTO BERSAMA 2 (CO-OP STORY GALLERY)
+                     Ganti nilai atribut src="..." di bawah ini dengan foto berdua #2
+                     ============================================================= -->
+                <div class="lg:col-span-5">
+                    <div class="bg-[#FFF9EB] arcade-box p-3 sm:p-4 transform rotate-1">
+                        <div class="relative overflow-hidden border-4 border-[#181818] rounded-lg aspect-[4/5] bg-gray-200">
+                            <!-- FOTO BERSAMA 2 -->
+                            <img
+                                src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80"
+                                onerror="this.src='https://placehold.co/600x750/00A800/FFFFFF?text=Foto+Bersama+2'"
+                                alt="Foto Bersama Pengantin 2 - Raka dan Nadya"
+                                class="w-full h-full object-cover"
+                            >
+                            <div class="absolute top-3 left-3 bg-[#FAC000] text-[#181818] font-pixel text-[9px] px-2.5 py-1 rounded border-2 border-[#181818]">
+                                ★ 1-UP TOGETHER
+                            </div>
+                        </div>
+                        <p class="font-pixel text-[10px] text-center text-[#181818] mt-3">
+                            "PLAYER 1 &amp; PLAYER 2 READY!"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Love Story Timeline Stages -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-[#FFF9EB] arcade-box-sm p-4 sm:p-5 flex gap-4 items-start">
+                        <div class="bg-[#E52521] text-white font-pixel text-xs px-3 py-2 rounded-lg border-2 border-[#181818] shrink-0">
+                            1-1
+                        </div>
+                        <div>
+                            <h3 class="font-pixel text-xs sm:text-sm text-[#181818]">FIRST MEET (2021)</h3>
+                            <p class="text-xs sm:text-sm text-gray-700 mt-1.5 leading-relaxed font-medium">
+                                Bertemu pertama kali di kedai kopi saat berteduh dari hujan. Obrolan seru soal game klasik Nintendo menjadi awal petualangan kami.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#FFF9EB] arcade-box-sm p-4 sm:p-5 flex gap-4 items-start">
+                        <div class="bg-[#00A800] text-white font-pixel text-xs px-3 py-2 rounded-lg border-2 border-[#181818] shrink-0">
+                            1-2
+                        </div>
+                        <div>
+                            <h3 class="font-pixel text-xs sm:text-sm text-[#181818]">CO-OP MODE ACTIVATED (2022)</h3>
+                            <p class="text-xs sm:text-sm text-gray-700 mt-1.5 leading-relaxed font-medium">
+                                Resmi menjadi partner satu tim. Melewati berbagai level kesibukan, jarak, dan tawa bersama di setiap akhir pekan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#FFF9EB] arcade-box-sm p-4 sm:p-5 flex gap-4 items-start">
+                        <div class="bg-[#FAC000] text-[#181818] font-pixel text-xs px-3 py-2 rounded-lg border-2 border-[#181818] shrink-0">
+                            1-3
+                        </div>
+                        <div>
+                            <h3 class="font-pixel text-xs sm:text-sm text-[#181818]">THE PROPOSAL (2025)</h3>
+                            <p class="text-xs sm:text-sm text-gray-700 mt-1.5 leading-relaxed font-medium">
+                                Di bawah langit senja Yogyakarta, Raka melamar Nadya dengan penuh keyakinan: "Maukah kamu menjadi Player 2-ku selamanya?"
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#FFF9EB] arcade-box-sm p-4 sm:p-5 flex gap-4 items-start border-[#E52521]">
+                        <div class="bg-[#181818] text-[#FAC000] font-pixel text-xs px-3 py-2 rounded-lg border-2 border-[#181818] shrink-0">
+                            1-4
+                        </div>
+                        <div>
+                            <h3 class="font-pixel text-xs sm:text-sm text-[#E52521]">ROYAL WEDDING CASTLE (2026)</h3>
+                            <p class="text-xs sm:text-sm text-gray-700 mt-1.5 leading-relaxed font-medium">
+                                Babak baru resmi dimulai! Kami mengundang Anda hadir menjadi saksi penyatuan dua hati dalam ikatan suci pernikahan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Mystery Question Blocks -->
+            <div class="bg-[#181818] arcade-box p-5 sm:p-6 text-center text-white">
+                <p class="font-pixel text-[10px] sm:text-xs text-[#FAC000] mb-2">
+                    KETUK KOTAK MISTERI (?) UNTUK BONUS KOIN &amp; FAKTA UNIK!
+                </p>
+                <div id="mystery-fact-display" class="min-h-[2.75rem] flex items-center justify-center text-xs sm:text-sm text-gray-200 mb-5 px-2">
+                    Klik salah satu blok tanda tanya di bawah ini!
+                </div>
+                <div class="flex justify-center gap-5 sm:gap-10">
+                    <button onclick="hitMysteryBlock(this, '🪙', 'Fakta #1: Raka & Nadya pernah begadang 6 jam demi menamatkan Mario Kart & Overcooked!')" class="mystery-block w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center font-pixel text-xl sm:text-2xl text-[#181818]">
+                        ?
+                    </button>
+                    <button onclick="hitMysteryBlock(this, '🍄', 'Fakta #2: Menu wajib kencan pertama mereka adalah ramen pedas level maksimal!')" class="mystery-block w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center font-pixel text-xl sm:text-2xl text-[#181818]">
+                        ?
+                    </button>
+                    <button onclick="hitMysteryBlock(this, '❤️', 'Fakta #3: Cincin pernikahan mereka terukir tulisan rahasia: 1-UP FOREVER.')" class="mystery-block w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center font-pixel text-xl sm:text-2xl text-[#181818]">
+                        ?
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="brick-divider w-full"></div>
+
+    <!-- =====================================================================
+         5. WORLD 1-3: QUEST DETAILS (AKAD NIKAH & RESEPSI)
+         ===================================================================== -->
+    <section id="event" class="py-16 px-4 bg-[#202028] text-white">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="inline-block bg-[#E52521] text-white font-pixel text-[10px] sm:text-xs px-4 py-2 rounded-lg border-2 border-white mb-3">
+                    WORLD 1-3: QUEST DETAILS
+                </span>
+                <h2 class="font-pixel text-lg sm:text-2xl md:text-3xl text-[#FAC000]">
+                    WAKTU &amp; LOKASI ACARA
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Akad Nikah -->
+                <div>
+                    <div class="warp-pipe-top"></div>
+                    <div class="warp-pipe-body p-2">
+                        <div class="bg-[#FFF9EB] text-[#181818] p-5 sm:p-6 rounded-xl border-4 border-[#181818]">
+                            <div class="flex items-center justify-between border-b-2 border-[#181818] pb-3 mb-4">
+                                <h3 class="font-pixel text-sm sm:text-base text-[#00A800]">AKAD NIKAH</h3>
+                                <span class="text-2xl">💍</span>
+                            </div>
+                            <div class="space-y-3 text-xs sm:text-sm font-medium">
+                                <p><strong>📅 Hari / Tanggal:</strong><br>Minggu, 20 Desember 2026</p>
+                                <p><strong>⏰ Pukul:</strong><br>08.00 - 10.00 WIB</p>
+                                <p><strong>📍 Lokasi:</strong><br>Ruang Sakura, Grand Ballroom Nusantara, Jl. Jend. Sudirman Kav. 45, Jakarta Selatan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resepsi -->
+                <div>
+                    <div class="warp-pipe-top"></div>
+                    <div class="warp-pipe-body p-2">
+                        <div class="bg-[#FFF9EB] text-[#181818] p-5 sm:p-6 rounded-xl border-4 border-[#181818]">
+                            <div class="flex items-center justify-between border-b-2 border-[#181818] pb-3 mb-4">
+                                <h3 class="font-pixel text-sm sm:text-base text-[#E52521]">RESEPSI</h3>
+                                <span class="text-2xl">🏰</span>
+                            </div>
+                            <div class="space-y-3 text-xs sm:text-sm font-medium">
+                                <p><strong>📅 Hari / Tanggal:</strong><br>Minggu, 20 Desember 2026</p>
+                                <p><strong>⏰ Pukul:</strong><br>11.00 - 14.00 WIB</p>
+                                <p><strong>📍 Lokasi:</strong><br>Main Hall, Grand Ballroom Nusantara, Jl. Jend. Sudirman Kav. 45, Jakarta Selatan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RPG Dialog Venue Copy & Maps -->
+            <div class="mt-10 bg-[#181818] border-4 border-white rounded-2xl p-5 sm:p-6 text-center max-w-2xl mx-auto">
+                <p class="font-pixel text-[10px] sm:text-xs text-[#FAC000] mb-2">
+                    ▶ VENUE: GRAND BALLROOM NUSANTARA
+                </p>
+                <p id="venue-address" class="text-xs sm:text-sm text-gray-200 mb-5 font-medium">
+                    Jl. Jend. Sudirman Kav. 45, Karet Semanggi, Jakarta Selatan 12930
+                </p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="copyVenueAddress()" class="arcade-btn bg-[#FAC000] hover:bg-[#ffe042] text-[#181818] font-pixel text-[10px] sm:text-xs px-5 py-3">
+                        📋 SALIN ALAMAT
+                    </button>
+                    <a href="https://maps.google.com/?q=Jakarta" target="_blank" rel="noopener" onclick="playCoinSound()" class="inline-block arcade-btn bg-[#00A800] hover:bg-[#00c200] text-white font-pixel text-[10px] sm:text-xs px-5 py-3">
+                        🗺️ GOOGLE MAPS
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         6. WORLD 1-4: RSVP & CASTLE FINALE (MARIO HD & PEACH HD CELEBRATION)
+         ===================================================================== -->
+    <section id="rsvp" class="pt-16 pb-0 bg-[#5C94FC] relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-8">
+                <span class="inline-block bg-[#181818] text-[#FAC000] font-pixel text-[10px] sm:text-xs px-4 py-2 rounded-lg mb-3">
+                    WORLD 1-4: CASTLE STAGE CLEAR!
+                </span>
+                <h2 class="font-pixel text-lg sm:text-2xl md:text-3xl text-white drop-shadow-[3px_3px_0px_#181818]">
+                    KONFIRMASI &amp; UCAPAN
+                </h2>
+                <p class="text-white text-xs sm:text-sm font-semibold mt-2 drop-shadow-[1px_1px_0px_#181818]">
+                    Kirim ucapan untuk membantu Mario menemui Princess Peach di kastil &amp; menyalakan kembang api!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+                <!-- RSVP Form -->
+                <div class="md:col-span-5 bg-[#FFF9EB] arcade-box p-5 sm:p-6">
+                    <form id="rsvp-form" onsubmit="handleRSVP(event)" class="space-y-4 text-xs sm:text-sm">
+                        <div>
+                            <label class="font-bold block mb-1">Nama Tamu *</label>
+                            <input type="text" id="guest-name" required placeholder="Contoh: Budi Santoso" class="w-full px-3 py-2.5 bg-white border-3 border-[#181818] rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-[#FAC000]">
+                        </div>
+
+                        <div>
+                            <label class="font-bold block mb-1">Konfirmasi Kehadiran *</label>
+                            <select id="guest-status" class="w-full px-3 py-2.5 bg-white border-3 border-[#181818] rounded-lg font-semibold focus:outline-none">
+                                <option value="Hadir">✅ Siap Hadir (Join Co-Op)</option>
+                                <option value="Tidak Hadir">❌ Maaf, Berhalangan Hadir</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="font-bold block mb-1">Jumlah Tamu</label>
+                            <select id="guest-count" class="w-full px-3 py-2.5 bg-white border-3 border-[#181818] rounded-lg font-semibold focus:outline-none">
+                                <option value="1 Orang">1 Player</option>
+                                <option value="2 Orang" selected>2 Players</option>
+                                <option value="Keluarga">Party / Keluarga</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="font-bold block mb-1">Ucapan &amp; Doa Restu *</label>
+                            <textarea id="guest-message" rows="3" required placeholder="Tulis doa terbaik untuk Raka & Nadya..." class="w-full px-3 py-2.5 bg-white border-3 border-[#181818] rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-[#FAC000]"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full arcade-btn bg-[#E52521] hover:bg-[#ff332e] text-white font-pixel text-[10px] sm:text-xs py-3.5 leading-relaxed">
+                            🚩 KIRIM UCAPAN &amp; STAGE CLEAR
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Live Guestbook Wishes -->
+                <div class="md:col-span-7 bg-[#181818] arcade-box p-5 sm:p-6 text-white flex flex-col">
+                    <div class="flex items-center justify-between border-b-2 border-gray-700 pb-3 mb-4">
+                        <span class="font-pixel text-xs text-[#FAC000]">PAPAN UCAPAN TAMU</span>
+                        <span id="wish-counter" class="font-pixel text-[10px] bg-[#00A800] px-2.5 py-1 rounded">3 PESAN</span>
+                    </div>
+
+                    <div id="wishes-list" class="space-y-3 overflow-y-auto max-h-[380px] pr-1">
+                        <div class="bg-[#262630] border-2 border-gray-600 rounded-xl p-3.5">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-[#FAC000] text-xs sm:text-sm">Andi &amp; Keluarga</span>
+                                <span class="text-[10px] bg-[#00A800] text-white px-2 py-0.5 rounded font-bold">Hadir • 2 Players</span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200">
+                                Selamat menempuh hidup baru Raka &amp; Nadya! Semoga selalu kompak di setiap level kehidupan. 1-UP terus!
+                            </p>
+                        </div>
+
+                        <div class="bg-[#262630] border-2 border-gray-600 rounded-xl p-3.5">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-[#FAC000] text-xs sm:text-sm">Sinta Dewi</span>
+                                <span class="text-[10px] bg-[#00A800] text-white px-2 py-0.5 rounded font-bold">Hadir • 1 Player</span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200">
+                                Undangan bertema Mario paling gemas! Sampai ketemu di Grand Ballroom Nusantara ya!
+                            </p>
+                        </div>
+
+                        <div class="bg-[#262630] border-2 border-gray-600 rounded-xl p-3.5">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-[#FAC000] text-xs sm:text-sm">Dimas Aditya</span>
+                                <span class="text-[10px] bg-[#E52521] text-white px-2 py-0.5 rounded font-bold">Tidak Hadir</span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200">
+                                Maaf belum bisa hadir langsung karena dinas luar kota, tapi doa terbaik selalu menyertai kalian!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Castle Finale Stage (HD Mario + HD Peach + Flag + Fireworks) -->
+            <div id="castle-stage" onclick="triggerCastleFinale()" title="Klik untuk jalankan animasi Stage Clear!" class="relative h-48 sm:h-56 max-w-3xl mx-auto cursor-pointer select-none">
+                <div id="fireworks-layer" class="pointer-events-none absolute inset-0 z-20"></div>
+
+                <div id="stage-status-banner" class="text-center">
+                    <span class="inline-block bg-[#181818]/90 text-white font-pixel text-[8px] sm:text-[10px] px-3.5 py-1.5 rounded-lg border-2 border-white">
+                        KLIK STAGE INI / KIRIM UCAPAN UNTUK STAGE CLEAR!
+                    </span>
+                </div>
+
+                <!-- HD Mario Finale Runner -->
+                <div id="mario-finale-runner" style="left: 5%;" class="mario-finale-runner absolute -bottom-1 z-20">
+                    <svg class="w-16 h-16 sm:w-20 sm:h-20" viewBox="0 0 120 120">
+                        <use href="#hd-mario"/>
+                    </svg>
+                </div>
+
+                <!-- Goal Flagpole -->
+                <div class="absolute bottom-0 right-[36%] sm:right-[34%] h-40 sm:h-44 w-2.5 bg-white border-x-2 border-[#181818] z-10">
+                    <div class="w-4 h-4 rounded-full bg-[#FAC000] border-2 border-[#181818] -ml-1.5 -mt-3"></div>
+                    <div id="castle-flag" style="top: 8px;" class="castle-flag absolute right-2 w-9 h-6 bg-[#00A800] border-2 border-[#181818] rounded-l flex items-center justify-center text-[9px] text-white font-pixel">
+                        ♥
+                    </div>
+                </div>
+
+                <!-- HD Princess Peach at Castle -->
+                <div class="absolute -bottom-1 right-[20%] sm:right-[19%] z-20 animate-gate-peach">
+                    <svg class="w-16 h-16 sm:w-20 sm:h-20" viewBox="0 0 120 120">
+                        <use href="#hd-peach"/>
+                    </svg>
+                </div>
+
+                <!-- Royal Brick Castle -->
+                <div class="absolute bottom-0 right-1 sm:right-3 w-24 sm:w-28 h-28 sm:h-32 bg-[#C84C0C] border-4 border-[#181818] border-b-0 flex flex-col justify-between items-center z-10">
+                    <div class="w-full flex justify-between -mt-3 px-0.5">
+                        <span class="w-4 h-3 bg-[#C84C0C] border-2 border-[#181818]"></span>
+                        <span class="w-4 h-3 bg-[#C84C0C] border-2 border-[#181818]"></span>
+                        <span class="w-4 h-3 bg-[#C84C0C] border-2 border-[#181818]"></span>
+                    </div>
+                    <div class="w-9 h-12 bg-[#181818] rounded-t-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ground-tiles w-full"></div>
+    <footer class="bg-[#181818] text-white py-8 px-4 text-center">
+        <p class="font-pixel text-xs sm:text-sm text-[#FAC000] mb-2">THANK YOU FOR PLAYING!</p>
+        <p class="text-xs sm:text-sm text-gray-400">
+            Super Wedding Bros. • Raka Pratama &amp; Nadya Maharani • 20 Desember 2026
+        </p>
+    </footer>
+
+    <!-- Custom Toast Notification -->
+    <div id="retro-toast" class="fixed bottom-5 right-5 z-50 hidden bg-[#00A800] text-white arcade-box-sm px-4 py-3 font-pixel text-[10px] sm:text-xs flex items-center gap-2">
+        <span>🍄</span>
+        <span id="retro-toast-text">1-UP! UCAPAN TERKIRIM!</span>
+    </div>
+
+    <!-- =====================================================================
+         JAVASCRIPT: GATE TRANSITION, URL GUEST NAME, 8-BIT SYNTH AUDIO & RSVP
+         ===================================================================== -->
+    <script>
+        // 1. Read Guest Name from URL Parameter (?to=Nama+Tamu)
+        (function parseGuestName() {
+            const params = new URLSearchParams(window.location.search);
+            const guest = params.get('to') || params.get('kepada');
+            if (guest && guest.trim().length > 0) {
+                document.getElementById('guest-invite-name').textContent = guest.trim();
+                const rsvpNameInput = document.getElementById('guest-name');
+                if (rsvpNameInput) rsvpNameInput.value = guest.trim();
+            }
+        })();
+
+        // 2. State Variables & Web Audio 8-Bit Synthesizer
+        let coins = 0;
+        let score = 2026;
+        let audioEnabled = true;
+        let bgmPlaying = false;
+        let bgmTimer = null;
+        let bgmStep = 0;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playTone(freq, duration, type = 'square', volume = 0.055, delay = 0) {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime + delay;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, now);
+            gain.gain.setValueAtTime(volume, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + duration);
+        }
+
+        function playCoinSound() {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                playTone(987.77, 0.09, 'square', 0.07, 0);
+                playTone(1318.51, 0.28, 'square', 0.07, 0.08);
+            } catch (e) {}
+        }
+
+        function playJumpSound() {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.exponentialRampToValueAtTime(660, now + 0.18);
+                gain.gain.setValueAtTime(0.07, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } catch (e) {}
+        }
+
+        function play1UpSound() {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                const notes = [330, 392, 659, 523, 587, 784];
+                notes.forEach((freq, idx) => {
+                    playTone(freq, 0.09, 'square', 0.07, idx * 0.08);
+                });
+            } catch (e) {}
+        }
+
+        function playStageClearFanfare() {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                const melody = [
+                    { f: 392.00, d: 0.12, t: 0.00 },
+                    { f: 523.25, d: 0.12, t: 0.13 },
+                    { f: 659.25, d: 0.12, t: 0.26 },
+                    { f: 783.99, d: 0.22, t: 0.39 },
+                    { f: 659.25, d: 0.12, t: 0.63 },
+                    { f: 783.99, d: 0.45, t: 0.77 }
+                ];
+                melody.forEach(n => playTone(n.f, n.d, 'square', 0.08, n.t));
+            } catch (e) {}
+        }
+
+        // Cheerful Chiptune Melody Loop
+        const chiptuneMelody = [
+            659.25, 659.25, 0, 659.25, 0, 523.25, 659.25, 0,
+            783.99, 0, 0, 0, 392.00, 0, 0, 0,
+            523.25, 0, 0, 392.00, 0, 0, 329.63, 0,
+            440.00, 0, 493.88, 0, 466.16, 440.00, 0, 392.00
+        ];
+
+        function startBGM() {
+            if (bgmPlaying) return;
+            bgmPlaying = true;
+            initAudio();
+            const label = document.getElementById('bgm-label');
+            const btn = document.getElementById('bgm-toggle');
+            label.textContent = 'BGM: ON';
+            btn.classList.add('bg-[#FAC000]', 'text-[#181818]');
+            btn.classList.remove('bg-[#282828]', 'text-[#FAC000]');
+            bgmStep = 0;
+            bgmTimer = setInterval(() => {
+                if (!bgmPlaying || !audioEnabled) return;
+                const freq = chiptuneMelody[bgmStep % chiptuneMelody.length];
+                if (freq > 0) {
+                    playTone(freq, 0.14, 'triangle', 0.055, 0);
+                }
+                bgmStep++;
+            }, 185);
+        }
+
+        function stopBGM() {
+            bgmPlaying = false;
+            const label = document.getElementById('bgm-label');
+            const btn = document.getElementById('bgm-toggle');
+            label.textContent = 'BGM: OFF';
+            btn.classList.remove('bg-[#FAC000]', 'text-[#181818]');
+            btn.classList.add('bg-[#282828]', 'text-[#FAC000]');
+            clearInterval(bgmTimer);
+        }
+
+        function toggleBGM() {
+            if (bgmPlaying) stopBGM();
+            else startBGM();
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            document.getElementById('sound-icon').textContent = audioEnabled ? '🔊' : '🔇';
+            if (audioEnabled) playCoinSound();
+        }
+
+        // 3. Open Fullscreen Gate Screen
+        function openWeddingGate() {
+            const gate = document.getElementById('opening-gate');
+            gate.classList.add('opened');
+            play1UpSound();
+            setTimeout(() => {
+                startBGM();
+            }, 600);
+        }
+
+        // 4. Coin Counter & Floating Coin Pop
+        function collectBonusCoin(el, symbol = '🪙 +100') {
+            coins++;
+            score += 100;
+            document.getElementById('coin-count').textContent = String(coins).padStart(2, '0');
+            document.getElementById('hud-score').textContent = String(score).padStart(6, '0');
+            playCoinSound();
+
+            if (el) {
+                const rect = el.getBoundingClientRect();
+                const popEl = document.createElement('div');
+                popEl.textContent = symbol;
+                popEl.className = 'fixed z-50 font-pixel text-xs text-[#FAC000] drop-shadow-[2px_2px_0px_#181818] pointer-events-none animate-item-pop';
+                popEl.style.left = `${rect.left + rect.width / 2 - 28}px`;
+                popEl.style.top = `${rect.top - 10}px`;
+                document.body.appendChild(popEl);
+                setTimeout(() => popEl.remove(), 880);
+            }
+        }
+
+        // 5. Mystery Block Interaction
+        function hitMysteryBlock(btn, itemEmoji, factText) {
+            btn.classList.remove('bump');
+            void btn.offsetWidth;
+            btn.classList.add('hit', 'bump');
+            collectBonusCoin(btn, `${itemEmoji} +100`);
+            const display = document.getElementById('mystery-fact-display');
+            display.textContent = factText;
+            display.classList.add('text-[#FAC000]', 'font-bold');
+        }
+
+        // 6. Castle Stage Clear Finale
+        function triggerCastleFinale() {
+            const mario = document.getElementById('mario-finale-runner');
+            const flag = document.getElementById('castle-flag');
+            const banner = document.getElementById('stage-status-banner');
+            const fwLayer = document.getElementById('fireworks-layer');
+
+            mario.style.left = '56%';
+            flag.style.top = '106px';
+
+            banner.innerHTML = `
+                <span class="inline-block bg-[#FAC000] text-[#181818] font-pixel text-[9px] sm:text-xs px-3.5 py-1.5 rounded-lg border-2 border-[#181818]">
+                    ★ STAGE CLEAR! MARIO ♥ PEACH ★
+                </span>
+            `;
+
+            playStageClearFanfare();
+
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const fw = document.createElement('div');
+                    fw.textContent = '✨🎆✨';
+                    fw.className = 'absolute font-pixel text-base sm:text-xl animate-firework';
+                    fw.style.left = `${20 + Math.random() * 60}%`;
+                    fw.style.top = `${10 + Math.random() * 45}%`;
+                    fwLayer.appendChild(fw);
+                    setTimeout(() => fw.remove(), 950);
+                }, i * 220);
+            }
+        }
+
+        // 7. Countdown Timer
+        const weddingDate = new Date('2026-12-20T08:00:00+07:00').getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = Math.max(0, weddingDate - now);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+            document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // 8. RSVP Form & Guestbook
+        let wishCount = 3;
+        function handleRSVP(e) {
+            e.preventDefault();
+            const name = document.getElementById('guest-name').value.trim();
+            const status = document.getElementById('guest-status').value;
+            const count = document.getElementById('guest-count').value;
+            const msg = document.getElementById('guest-message').value.trim();
+            if (!name || !msg) return;
+
+            const badgeColor = status === 'Hadir' ? 'bg-[#00A800]' : 'bg-[#E52521]';
+            const badgeText = status === 'Hadir' ? `Hadir • ${count}` : 'Tidak Hadir';
+
+            const card = document.createElement('div');
+            card.className = 'bg-[#262630] border-2 border-[#FAC000] rounded-xl p-3.5 transition-all';
+            card.innerHTML = `
+                <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-[#FAC000] text-xs sm:text-sm">${escapeHTML(name)}</span>
+                    <span class="text-[10px] ${badgeColor} text-white px-2 py-0.5 rounded font-bold">${escapeHTML(badgeText)}</span>
+                </div>
+                <p class="text-xs sm:text-sm text-gray-200">${escapeHTML(msg)}</p>
+            `;
+
+            document.getElementById('wishes-list').prepend(card);
+            wishCount++;
+            document.getElementById('wish-counter').textContent = `${wishCount} PESAN`;
+
+            triggerCastleFinale();
+            showToast('STAGE CLEAR! UCAPAN TERKIRIM!');
+            e.target.reset();
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>"']/g, m => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[m]));
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('retro-toast');
+            document.getElementById('retro-toast-text').textContent = text;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3800);
+        }
+
+        // 9. Copy Address Helper
+        function copyVenueAddress() {
+            const addr = document.getElementById('venue-address').textContent.trim();
+            const tempInput = document.createElement('textarea');
+            tempInput.value = addr;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                playCoinSound();
+                showToast('ALAMAT BERHASIL DISALIN!');
+            } catch (err) {
+                showToast('SILAKAN SALIN ALAMAT MANUAL');
+            }
+            document.body.removeChild(tempInput);
+        }
+    </script>
+</body>
+</html>
